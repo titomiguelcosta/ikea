@@ -19,7 +19,7 @@ use App\Controller\Products\LoadController;
  *   "get",
  *   "load"={
  *    "method"="POST",
- *    "path"="/v1/products/load",
+ *    "path"="/products/load",
  *    "controller"=LoadController::class,
  *   }
  *  }
