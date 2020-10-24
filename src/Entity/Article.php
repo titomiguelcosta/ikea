@@ -15,12 +15,12 @@ use App\Controller\Articles\LoadController;
  * @ApiResource(
  *  normalizationContext={"groups"={"read"}},
  *  collectionOperations={
- *      "get",
- *      "load_articles"={
- *         "method"="POST",
- *         "path"="/v1/articles/load",
- *         "controller"=LoadController::class,
- *     }
+ *    "get",
+ *    "load"={
+ *     "method"="POST",
+ *     "path"="/v1/articles/load",
+ *     "controller"=LoadController::class,
+ *    }
  *  }
  * )
  */
