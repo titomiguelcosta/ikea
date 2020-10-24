@@ -14,7 +14,7 @@ use App\Controller\Articles\LoadController;
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
  * @ApiResource(
  *  normalizationContext={"groups"={"read"}},
- *  itemOperations={},
+ *  itemOperations={"get"},
  *  collectionOperations={
  *    "get",
  *    "load"={

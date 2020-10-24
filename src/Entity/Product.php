@@ -8,13 +8,22 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 use App\Controller\Products\LoadController;
+use App\Controller\Products\SellController;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  * @ApiResource(
  *  normalizationContext={"groups"={"read"}},
- *  itemOperations={},
+ *  itemOperations={
+ *   "get",
+ *   "sell"={
+ *    "method"="POST",
+ *    "path"="/products/{id}/sell",
+ *    "controller"=SellController::class,
+ *   }
+ *  },
  *  collectionOperations={
  *   "get",
  *   "load"={
@@ -121,5 +130,25 @@ class Product
         $this->productArticles = new ArrayCollection();
 
         return $this;
+    }
+
+    /**
+     * @Groups({"read"})
+     * @SerializedName("stock")
+     */
+    public function getStock(): int
+    {
+        $stock = 0;
+
+        /** @var ProductArticle */
+        foreach ($this->getProductArticles() as $productArticle) {
+            $needed = $productArticle->getAmount();
+            $available = $productArticle->getArticle()->getStock();
+            $total = floor($available / $needed);
+
+            $stock = $stock > 0 ? min($stock, $total) : $total;
+        }
+
+        return $stock;
     }
 }
