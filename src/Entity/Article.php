@@ -8,13 +8,20 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use App\Controller\Articles\LoadController;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
  * @ApiResource(
  *  normalizationContext={"groups"={"read"}},
- *  collectionOperations={"get"},
- *  itemOperations={"get"}
+ *  collectionOperations={
+ *      "get",
+ *      "load_articles"={
+ *         "method"="POST",
+ *         "path"="/v1/articles/load",
+ *         "controller"=LoadController::class,
+ *     }
+ *  }
  * )
  */
 class Article
