@@ -1,0 +1,25 @@
+App\Entity\ProductArticle:
+    product_1_article_1:
+        product: "@product_1"
+        article: "@article_1"
+        amount: 4
+    product_1_article_2:
+        product: "@product_1"
+        article: "@article_2"
+        amount: 8
+    product_1_article_3:
+        product: "@product_1"
+        article: "@article_3"
+        amount: 1
+    product_2_article_1:
+        product: "@product_2"
+        article: "@article_1"
+        amount: 4
+    product_2_article_2:
+        product: "@product_2"
+        article: "@article_2"
+        amount: 8
+    product_2_article_4:
+        product: "@product_2"
+        article: "@article_3"
+        amount: 1

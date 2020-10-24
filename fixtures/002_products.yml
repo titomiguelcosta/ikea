@@ -1,0 +1,7 @@
+App\Entity\Product:
+    product_1:
+        price: 11.23
+        name: Dining Chair
+    product_2:
+        price: 11.23
+        name: Dinning Table

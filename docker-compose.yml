@@ -1,0 +1,38 @@
+version: "3.1"
+services:
+    ikea-mysql:
+      image: mysql:5.7
+      container_name: ikea-mysql
+      working_dir: /application
+      volumes:
+        - .:/application
+        - ./var/mysql:/var/lib/mysql
+      environment:
+        - MYSQL_ROOT_PASSWORD=mobilia
+        - MYSQL_DATABASE=ikea
+        - MYSQL_USER=ikea
+        - MYSQL_PASSWORD=mobilia
+      ports:
+        - "8092:3306"
+
+    ikea-webserver:
+      image: nginx:alpine
+      container_name: ikea-webserver
+      working_dir: /application
+      volumes:
+        - .:/application
+        - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      ports:
+        - "8080:80"
+      depends_on:
+        - ikea-php-fpm
+
+    ikea-php-fpm:
+      build: ./docker/php-fpm
+      container_name: ikea-php-fpm
+      working_dir: /application
+      volumes:
+        - .:/application
+        - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini
+      depends_on:
+        - ikea-mysql
