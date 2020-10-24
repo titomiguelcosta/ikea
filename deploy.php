@@ -2,7 +2,7 @@
 
 namespace Deployer;
 
-require 'recipe/symfony5.php';
+require 'recipe/symfony4.php';
 
 set('application', 'ikea:api');
 set('repository', 'git@github.com:titomiguelcosta/ikea.git');
@@ -18,7 +18,7 @@ host('ikea.titomiguelcosta.com')
     ->user('ubuntu')
     ->stage('prod')
     ->set('deploy_path', '/mnt/websites/ikea')
-    ->set('shared_files', ['.env.prod.local'])
+    ->set('shared_files', ['.env.prod.local', '.env.prod.local'])
     ->set('branch', 'master')
     ->set('env', ['APP_ENV' => 'prod']);
 
