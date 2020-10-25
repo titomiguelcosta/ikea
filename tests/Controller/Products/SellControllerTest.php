@@ -34,8 +34,16 @@ class SellControllerTest extends ApiTestCase
         // sell it
         $response = $client->request('POST', sprintf('/v1/products/%d/sell', $id), ['headers' => $this->getHeaders()]);
         $this->assertResponseStatusCodeSame(201);
+        $this->assertJsonContains(['stock' => 1]);
 
-        $data = $response->toArray();
-        $this->assertSame($data['stock'], $stock - 1);
+        // sell it again
+        $response = $client->request('POST', sprintf('/v1/products/%d/sell', $id), ['headers' => $this->getHeaders()]);
+        $this->assertResponseStatusCodeSame(201);
+        $this->assertJsonContains(['stock' => 0]);
+
+        // out of stock
+        $response = $client->request('POST', sprintf('/v1/products/%d/sell', $id), ['headers' => $this->getHeaders()]);
+        $this->assertResponseStatusCodeSame(400);
+        $this->assertJsonContains(['hydra:description' => 'Product Dining Chair is out of stock.']);
     }
 }
