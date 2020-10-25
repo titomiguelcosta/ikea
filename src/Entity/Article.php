@@ -55,7 +55,7 @@ class Article
     private $stock;
 
     /**
-     * @ORM\OneToMany(targetEntity=ProductArticle::class, mappedBy="article", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=ProductArticle::class, mappedBy="article", orphanRemoval=true, fetch="EAGER")
      */
     private $productArticles;
 

@@ -19,9 +19,14 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *  itemOperations={
  *   "get",
  *   "sell"={
+ *    "defaults"={"_api_receive": false},
  *    "method"="POST",
  *    "path"="/products/{id}/sell",
  *    "controller"=SellController::class,
+ *    "openapi_context"={
+ *      "summary"="Sell product",
+ *      "type"="",
+ *    },
  *   }
  *  },
  *  collectionOperations={
@@ -58,7 +63,7 @@ class Product
     private $price;
 
     /**
-     * @ORM\OneToMany(targetEntity=ProductArticle::class, mappedBy="product", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=ProductArticle::class, mappedBy="product", orphanRemoval=true, fetch="EAGER")
      */
     private $productArticles;
 

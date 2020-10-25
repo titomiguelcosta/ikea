@@ -13,5 +13,6 @@ return [
     Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle::class => ['dev' => true, 'test' => true],
     Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle::class => ['dev' => true, 'test' => true],
     Hautelook\AliceBundle\HautelookAliceBundle::class => ['dev' => true, 'test' => true],
-    Sentry\SentryBundle\SentryBundle::class => ['all' => true],
+    Sentry\SentryBundle\SentryBundle::class => ['prod' => true, 'dev' => false, 'test' => false],
+    Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
 ];
