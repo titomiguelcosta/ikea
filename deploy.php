@@ -8,7 +8,7 @@ set('application', 'ikea:api');
 set('repository', 'git@github.com:titomiguelcosta/ikea.git');
 set('git_tty', false);
 set('keep_releases', 3);
-set('shared_dirs', ['var/log', 'var/sessions', 'vendor']);
+set('shared_dirs', ['var/log', 'var/sessions', 'vendor', 'bin/.phpunit']);
 set('shared_files', ['.env.prod.local', '.env.test.local']);
 set('writable_dirs', ['var/log', 'var/cache']);
 set('writable_mode', 'acl');
@@ -16,7 +16,8 @@ set('composer_action', 'install');
 set('composer_options', '{{composer_action}} --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader --no-suggest');
 
 task('tests:execute', function () {
-    run('php bin/phpunit');
+    run('php {{release_path}}/bin/console doctrine:migrations:migrate --env=test -n');
+    run('php {{release_path}}/vendor/bin/phpunit');
 });
 
 host('ikea.titomiguelcosta.com')
