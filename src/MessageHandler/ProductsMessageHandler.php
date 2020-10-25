@@ -31,7 +31,7 @@ final class ProductsMessageHandler implements MessageHandlerInterface
 
     public function __invoke(ProductsMessage $message)
     {
-        /** @var ProductDto $producDto */
+        /* @var ProductDto $producDto */
         foreach ($message->getProducts()->getProducts() as $productDto) {
             $product = $this->productRepository->findOneByName($productDto->getName());
 

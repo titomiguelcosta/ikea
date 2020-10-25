@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Products implements DtoInterface
 {
-    /** 
+    /**
      * @var Product[]
      */
     private $products = [];

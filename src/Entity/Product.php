@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\Products\LoadController;
+use App\Controller\Products\SellController;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
-use App\Controller\Products\LoadController;
-use App\Controller\Products\SellController;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
@@ -140,7 +140,7 @@ class Product
     {
         $stock = 0;
 
-        /** @var ProductArticle */
+        /* @var ProductArticle */
         foreach ($this->getProductArticles() as $productArticle) {
             $needed = $productArticle->getAmount();
             $available = $productArticle->getArticle()->getStock();

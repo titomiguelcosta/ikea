@@ -8,8 +8,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Articles implements DtoInterface
 {
-    /** 
-     * @var Article[] 
+    /**
+     * @var Article[]
      */
     private $articles = [];
 

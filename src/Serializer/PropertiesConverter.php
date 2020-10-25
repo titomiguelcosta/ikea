@@ -9,7 +9,7 @@ use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 class PropertiesConverter implements NameConverterInterface
 {
     /**
-     * from object to string
+     * from object to string.
      */
     public function normalize(string $propertyName)
     {
@@ -17,7 +17,7 @@ class PropertiesConverter implements NameConverterInterface
     }
 
     /**
-     * from string to object
+     * from string to object.
      */
     public function denormalize(string $propertyName)
     {
