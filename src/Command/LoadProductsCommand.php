@@ -5,6 +5,7 @@ namespace App\Command;
 use ApiPlatform\Core\Bridge\Symfony\Validator\Exception\ValidationException;
 use App\Dto\Products;
 use App\Message\ProductsMessage;
+use App\Serializer\SerializerTrait;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -12,7 +13,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use App\Serializer\SerializerTrait;
 
 class LoadProductsCommand extends Command
 {
@@ -26,6 +26,8 @@ class LoadProductsCommand extends Command
 
     public function __construct(MessageBusInterface $bus, ValidatorInterface $validator)
     {
+        parent::__construct();
+
         $this->bus = $bus;
         $this->serializer = $this->getSerializer();
         $this->validator = $validator;

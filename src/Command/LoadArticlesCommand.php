@@ -26,6 +26,7 @@ class LoadArticlesCommand extends Command
 
     public function __construct(MessageBusInterface $bus, ValidatorInterface $validator)
     {
+        parent::__construct();
         $this->bus = $bus;
         $this->serializer = $this->getSerializer();
         $this->validator = $validator;
