@@ -9,6 +9,7 @@ set('repository', 'git@github.com:titomiguelcosta/ikea.git');
 set('git_tty', false);
 set('keep_releases', 3);
 set('shared_dirs', ['var/log', 'var/sessions', 'vendor']);
+set('shared_files', ['.env.prod.local', '.env.test.local']);
 set('writable_dirs', ['var/log', 'var/cache']);
 set('writable_mode', 'acl');
 set('composer_action', 'install');
@@ -22,7 +23,6 @@ host('ikea.titomiguelcosta.com')
     ->user('ubuntu')
     ->stage('prod')
     ->set('deploy_path', '/mnt/websites/ikea')
-    ->set('shared_files', ['.env.prod.local', '.env.prod.local'])
     ->set('branch', 'master')
     ->set('env', ['APP_ENV' => 'prod']);
 
