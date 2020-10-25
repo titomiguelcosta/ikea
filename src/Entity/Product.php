@@ -27,6 +27,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *  collectionOperations={
  *   "get",
  *   "load"={
+ *    "defaults"={"_api_receive": false},
  *    "method"="POST",
  *    "path"="/products/load",
  *    "controller"=LoadController::class,

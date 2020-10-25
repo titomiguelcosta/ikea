@@ -14,6 +14,10 @@ set('writable_mode', 'acl');
 set('composer_action', 'install');
 set('composer_options', '{{composer_action}} --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader --no-suggest');
 
+task('tests:execute', function () {
+    run('php bin/phpunit');
+});
+
 host('ikea.titomiguelcosta.com')
     ->user('ubuntu')
     ->stage('prod')
@@ -24,3 +28,4 @@ host('ikea.titomiguelcosta.com')
 
 after('deploy:failed', 'deploy:unlock');
 before('deploy:symlink', 'database:migrate');
+after('database:migrate', 'tests:execute');

@@ -19,6 +19,10 @@ class Products implements DtoInterface
      * @Assert\All({
      *  @Assert\Type(Product::class)
      * })
+     * @Assert\Count(
+     *      min = 1,
+     *      minMessage = "At least one product"
+     * )
      */
     public function getProducts(): array
     {

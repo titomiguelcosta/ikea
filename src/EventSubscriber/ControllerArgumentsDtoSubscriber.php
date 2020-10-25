@@ -57,7 +57,7 @@ class ControllerArgumentsDtoSubscriber implements EventSubscriberInterface
                 $body = $request->getContent();
 
                 if (0 === mb_strlen(trim($body))) {
-                    return;
+                    $body = '{}';
                 }
 
                 $dto = $this->serializer->deserialize(
@@ -73,8 +73,6 @@ class ControllerArgumentsDtoSubscriber implements EventSubscriberInterface
 
                 $arguments[$pos] = $dto;
                 $event->setArguments($arguments);
-
-                return;
             }
         }
     }

@@ -5,21 +5,12 @@ declare(strict_types=1);
 namespace App\Controller\Products;
 
 use App\Entity\Product;
-use App\Entity\ProductArticle;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Manager\ProductManager;
 
 class SellController
 {
-    public function __invoke(Product $data, EntityManagerInterface $entityManager)
+    public function __invoke(Product $data, ProductManager $productManager)
     {
-        /** @var ProductArticle $productArticle */
-        foreach ($data->getProductArticles() as $productArticle) {
-            $article = $productArticle->getArticle();
-            $article->setStock($article->getStock() - $productArticle->getAmount());
-        }
-
-        $entityManager->flush();
-
-        return $data;
+        return $productManager->sell($data);
     }
 }

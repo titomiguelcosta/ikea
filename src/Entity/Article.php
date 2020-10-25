@@ -18,6 +18,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *  collectionOperations={
  *    "get",
  *    "load"={
+ *     "defaults"={"_api_receive": false},
  *     "method"="POST",
  *     "path"="/articles/load",
  *     "controller"=LoadController::class,

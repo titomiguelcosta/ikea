@@ -19,6 +19,10 @@ class Articles implements DtoInterface
      * @Assert\All({
      *  @Assert\Type(Article::class)
      * })
+     * @Assert\Count(
+     *      min = 1,
+     *      minMessage = "At least one article"
+     * )
      */
     public function getArticles(): array
     {
