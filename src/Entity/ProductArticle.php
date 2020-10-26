@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ProductArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ProductArticleRepository::class)
@@ -26,11 +27,13 @@ class ProductArticle
     /**
      * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="productArticles", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"read"})
      */
     private $article;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"read"})
      */
     private $amount;
 

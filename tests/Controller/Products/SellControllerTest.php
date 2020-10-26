@@ -4,11 +4,11 @@ namespace App\Tests\Controller\Products;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use App\Tests\TestsTrait;
-use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
+use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 
 class SellControllerTest extends ApiTestCase
 {
-    use RefreshDatabaseTrait;
+    use ReloadDatabaseTrait;
     use TestsTrait;
 
     public function testNonFoundProduct(): void
@@ -21,6 +21,7 @@ class SellControllerTest extends ApiTestCase
     public function testSellProduct(): void
     {
         $client = static::createClient();
+        self::bootKernel();
 
         // check first product stock
         $response = $client->request('GET', '/v1/products', ['headers' => $this->getHeaders()]);
@@ -45,5 +46,33 @@ class SellControllerTest extends ApiTestCase
         $response = $client->request('POST', sprintf('/v1/products/%d/sell', $id), ['headers' => $this->getHeaders()]);
         $this->assertResponseStatusCodeSame(400);
         $this->assertJsonContains(['hydra:description' => 'Product Dining Chair is out of stock.']);
+    }
+
+    public function testImpactOnArticles(): void
+    {
+        $client = static::createClient();
+        self::bootKernel();
+
+        // check first product stock
+        $response = $client->request('GET', '/v1/products', ['headers' => $this->getHeaders()]);
+        $this->assertResponseStatusCodeSame(200);
+        $data = $response->toArray();
+
+        $id = $data['hydra:member'][0]['id'];
+        $productStock = $data['hydra:member'][0]['stock'];
+        $articleStock = $data['hydra:member'][0]['productArticles'][0]['article']['stock'];
+        $amount = $data['hydra:member'][0]['productArticles'][0]['amount'];
+        $this->assertSame(2, $productStock);
+        $this->assertSame(12, $articleStock);
+        $this->assertSame(4, $amount);
+
+        // sell it
+        $response = $client->request('POST', sprintf('/v1/products/%d/sell', $id), ['headers' => $this->getHeaders()]);
+        $this->assertResponseStatusCodeSame(201);
+        $data = $response->toArray();
+        $this->assertJsonContains(['stock' => 1]);
+        $this->assertSame(1, $data['stock']);
+        $this->assertSame(8, $data['productArticles'][0]['article']['stock']);
+        $this->assertSame(4, $amount);
     }
 }

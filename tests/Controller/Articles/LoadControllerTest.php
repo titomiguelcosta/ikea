@@ -44,6 +44,7 @@ JSON;
     $this->assertEmpty($response->getContent());
 
     $response = $client->request('GET', '/v1/articles', ['headers' => $this->getHeaders()]);
+    // loading will append articles, and 4 of them already loaded as part of the fixtures
     $this->assertCount(5, $response->toArray()['hydra:member']);
   }
 
@@ -72,8 +73,44 @@ JSON;
 
     $response = $client->request('POST', '/v1/articles/load', $options);
     $this->assertResponseStatusCodeSame(400);
+    $this->assertJsonContains(['hydra:description' => 'articles[0].stock: This value should be greater than or equal to 1.
+articles[0].code: This value is too short. It should have 1 character or more.
+articles[0].name: This value is too short. It should have 1 character or more.']);
 
     $response = $client->request('GET', '/v1/articles', ['headers' => $this->getHeaders()]);
+    // no article was added
+    $this->assertCount(4, $response->toArray()['hydra:member']);
+  }
+
+  public function testInvalidJson(): void
+  {
+    $body = <<<JSON
+{
+  "inventory": [
+    {
+      "art_id": ,
+      "name": ""
+      "stock": "-23"
+    }
+  ]
+}
+JSON;
+
+    $options = [
+      'body' => $body,
+      'headers' => [
+        'content-type' => 'application/ld+json'
+      ]
+    ];
+
+    $client = static::createClient();
+
+    $response = $client->request('POST', '/v1/articles/load', $options);
+    $this->assertResponseStatusCodeSame(400);
+    $this->assertJsonContains(['hydra:description' => 'Syntax error']);
+
+    $response = $client->request('GET', '/v1/articles', ['headers' => $this->getHeaders()]);
+    // no article was added
     $this->assertCount(4, $response->toArray()['hydra:member']);
   }
 }

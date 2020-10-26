@@ -94,4 +94,38 @@ JSON;
     $response = $client->request('GET', '/v1/products', ['headers' => $this->getHeaders()]);
     $this->assertCount(2, $response->toArray()['hydra:member']);
   }
+
+  public function testInvalidJson(): void
+  {
+    $body = <<<JSON
+{
+  "products": [
+    {
+      "": ,
+      "contain_articles": [
+        {
+          "art_id": ,
+        }
+      ]
+    }
+  ]
+}
+JSON;
+
+    $options = [
+      'body' => $body,
+      'headers' => [
+        'content-type' => 'application/ld+json'
+      ]
+    ];
+
+    $client = static::createClient();
+
+    $response = $client->request('POST', '/v1/products/load', $options);
+    $this->assertResponseStatusCodeSame(400);
+    $this->assertJsonContains(['hydra:description' => 'Syntax error']);
+
+    $response = $client->request('GET', '/v1/products', ['headers' => $this->getHeaders()]);
+    $this->assertCount(2, $response->toArray()['hydra:member']);
+  }
 }

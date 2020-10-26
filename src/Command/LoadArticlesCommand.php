@@ -43,7 +43,7 @@ class LoadArticlesCommand extends Command
     {
         $file = $input->getArgument('file');
         if (!file_exists($file) || !is_readable($file)) {
-            throw new RuntimeException('file %s is not readable');
+            throw new RuntimeException(sprintf('file %s is not valid', $file));
         }
 
         $dto = $this->serializer->deserialize(

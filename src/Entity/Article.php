@@ -22,7 +22,42 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     "method"="POST",
  *     "path"="/articles/load",
  *     "controller"=LoadController::class,
- *    }
+ *     "openapi_context"={
+ *      "summary"="Load articles",
+ *      "parameters"={
+ *		 {
+ *		  "in"="body",
+ *		  "description"="List of articles",
+ *		  "schema"={
+ *         "type"="object",
+ *         "properties"={
+ *          "inventory"={
+ *           "type"="array",
+ *           "description"="List of articles",
+ *           "items"={
+ *            "type"="object",
+ *            "properties"={
+ *             "art_id"={
+ *              "type"="string",
+ *              "example"="1", 
+ *             },
+ *             "name"={
+ *              "type"="string",
+ *              "example"="leg", 
+ *             },
+ *             "stock"={
+ *              "type"="string",
+ *              "example"="12", 
+ *             },
+ *            },
+ *           },
+ *          },
+ *         },
+ *       },
+ *      },
+ *     },
+ *    },
+ *   },
  *  }
  * )
  */
