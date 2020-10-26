@@ -1,6 +1,6 @@
 api_platform:
     title: IKEA
-    description: API Warehouse Management System
+    description: API Warehouse Inventory System
     version: 0.0.1
     show_webby: false
     exception_to_status:
