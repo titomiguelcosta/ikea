@@ -77,3 +77,18 @@ It is one of the steps in the deployment process, so if they are not green, rele
   * Hosting provider should provide solution for it. For instance, on AWS, we can deploy our code to regions all over the world and database can be configured to support [Multi-AZ](https://aws.amazon.com/rds/features/multi-az/).
 * Observability
   * Integrated [Sentry](https://sentry.io/) so that any errors are logged and we could setup alerts. A more generic solution would be to use [DataDog](https://www.datadoghq.com/) or [New Relic](https://newrelic.com/). But same approach, let an external service handle it instead of overloading API.
+
+## Known issues
+
+* When booting docker for the first time, php-fpm will be notified that database is ready, when in reality causes to fail migrations and fixtures. To fix this, at the end of loading, stop docker-composer (Ctrl+c) an execute 
+
+```
+$ docker-compose up --build
+```
+
+or as an alternative, just access the php-fpm container and manually load data
+
+```
+$ docker exec -it ikea-php-fpm /bin/bash
+$ make bootstrap
+```
