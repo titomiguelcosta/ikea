@@ -1,4 +1,4 @@
-# IKEA: Technical test
+# IKEA: Warehouse Inventory System
 
 If you would like to test the API, there are 7 endpoints, and available on https://ikea.titomiguelcosta.com/v1/docs
 
@@ -53,13 +53,13 @@ It is one of the steps in the deployment process, so if they are not green, rele
 ## Unknowns
 
 * Products have a price, but they are not provided in the sample json, so hardcoding a value.
-* No business rules for what to do when invalid articles/products are detecting while loading.
+* No business rules for what to do when invalid articles/products are detected while loading.
 
 ## Assumptions
 
 * Only one currency, so not storing in the database any value.
 * No need to support translations.
-* Public API, no need for authentication.
+* Public API, no need for authentication/authorization.
 * Product names are unique.
 * Files will not have millions of thousands of records, cos if they do, loading everything in memory won't be the best approach.
 
