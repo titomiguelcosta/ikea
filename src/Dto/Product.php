@@ -55,6 +55,10 @@ class Product implements DtoInterface
      * @Assert\All({
      *  @Assert\Type(Component::class)
      * })
+     * @Assert\Count(
+     *  min = 1,
+     *  minMessage = "At least one component"
+     * )
      */
     public function getComponents(): array
     {
