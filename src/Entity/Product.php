@@ -201,15 +201,30 @@ class Product
      */
     public function getStock(): int
     {
-        $stock = 0;
+        $stock = null;
 
-        /* @var ProductArticle */
+        /* @var $productArticle ProductArticle */
         foreach ($this->getProductArticles() as $productArticle) {
             $needed = $productArticle->getAmount();
             $available = $productArticle->getArticle()->getStock();
-            $total = floor($available / $needed);
 
-            $stock = $stock > 0 ? min($stock, $total) : $total;
+            if (0 === $needed) {
+                continue;
+            }
+
+            if (0 === $available) {
+                $stock = 0;
+                break;
+            }
+
+            $total = (int) floor($available / $needed);
+
+            if ($total === 0) {
+                $stock = 0;
+                break;
+            }
+
+            $stock = null === $stock ? $total : min($stock, $total);
         }
 
         return $stock;
