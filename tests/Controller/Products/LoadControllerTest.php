@@ -13,7 +13,7 @@ class LoadControllerTest extends ApiTestCase
 
   public function testEmptyBody(): void
   {
-    static::createClient()->request('POST', '/v1/products/load', ['headers' => $this->getHeaders()]);
+    $this->client->request('POST', '/v1/products/load', ['headers' => $this->getHeaders()]);
 
     $this->assertResponseStatusCodeSame(400);
   }
@@ -47,13 +47,11 @@ JSON;
       ]
     ];
 
-    $client = static::createClient();
-
-    $response = $client->request('POST', '/v1/products/load', $options);
+    $response = $this->client->request('POST', '/v1/products/load', $options);
     $this->assertResponseStatusCodeSame(202);
     $this->assertEmpty($response->getContent());
 
-    $response = $client->request('GET', '/v1/products', ['headers' => $this->getHeaders()]);
+    $response = $this->client->request('GET', '/v1/products', ['headers' => $this->getHeaders()]);
     $this->assertCount(3, $response->toArray()['hydra:member']);
   }
 
@@ -86,12 +84,10 @@ JSON;
       ]
     ];
 
-    $client = static::createClient();
-
-    $response = $client->request('POST', '/v1/products/load', $options);
+    $response = $this->client->request('POST', '/v1/products/load', $options);
     $this->assertResponseStatusCodeSame(400);
 
-    $response = $client->request('GET', '/v1/products', ['headers' => $this->getHeaders()]);
+    $response = $this->client->request('GET', '/v1/products', ['headers' => $this->getHeaders()]);
     $this->assertCount(2, $response->toArray()['hydra:member']);
   }
 
@@ -119,13 +115,11 @@ JSON;
       ]
     ];
 
-    $client = static::createClient();
-
-    $response = $client->request('POST', '/v1/products/load', $options);
+    $response = $this->client->request('POST', '/v1/products/load', $options);
     $this->assertResponseStatusCodeSame(400);
     $this->assertJsonContains(['hydra:description' => 'Syntax error']);
 
-    $response = $client->request('GET', '/v1/products', ['headers' => $this->getHeaders()]);
+    $response = $this->client->request('GET', '/v1/products', ['headers' => $this->getHeaders()]);
     $this->assertCount(2, $response->toArray()['hydra:member']);
   }
 }
