@@ -16,29 +16,41 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *  normalizationContext={"groups"={"read"}},
  *  itemOperations={"get"},
  *  collectionOperations={
- *    "get",
- *    "load"={
- *     "defaults"={"_api_receive": false},
- *     "method"="POST",
- *     "path"="/articles/load",
- *     "controller"=LoadController::class,
- *     "openapi_context"={
- *      "summary"="Load articles",
- *      "parameters"={
- *		 {
- *		  "in"="body",
- *		  "description"="List of articles",
- *		  "schema"={
+ *   "get",
+ *   "load"={
+ *    "defaults"={"_api_receive": false},
+ *    "method"="POST",
+ *    "path"="/articles/load",
+ *    "controller"=LoadController::class,
+ *    "openapi_context"={
+ *     "summary"="Load articles",
+ *     "description"="Load articles by replacing existing ones and creating new ones if art_id does not exist yet",
+ *     "responses"={
+ *      "202"={
+ *       "description"="Articles loaded successfully",
+ *       "schema": {},
+ *      },
+ *      "400"={
+ *       "description"="Invalid json",
+ *      },
+ *     },
+ *     "requestBody"={
+ *      "description"="List of articles",
+ *      "required"="true",
+ *      "content"={
+ *       "application/json"={
+ *        "schema"={
  *         "type"="object",
  *         "properties"={
  *          "inventory"={
  *           "type"="array",
- *           "description"="List of articles",
+ *           "description"="Articles to be loaded",
  *           "items"={
  *            "type"="object",
  *            "properties"={
  *             "art_id"={
  *              "type"="string",
+ *              "description"="code that identifies article",
  *              "example"="1", 
  *             },
  *             "name"={
@@ -53,6 +65,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *           },
  *          },
  *         },
+ *        },
  *       },
  *      },
  *     },

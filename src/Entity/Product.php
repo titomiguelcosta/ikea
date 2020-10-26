@@ -25,18 +25,11 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *    "controller"=SellController::class,
  *    "openapi_context"={
  *     "summary"="Sell product",
- *     "parameters"={
- *		{
- *		 "name"="id",
- *		 "in"="path",
- *		 "description"="ID of product",
- *		 "required"="true",
- *		 "type"="integer",
- *      },
- *		{
- *		 "in"="body",
- *		 "description"="Empty body",
- *		 "schema"={},
+ *     "requestBody"={
+ *		"description"="List of products",
+ *      "content"={
+ *       "application/json"={
+ *       },
  *      },
  *     },
  *    },
@@ -51,35 +44,46 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *    "controller"=LoadController::class,
  *    "openapi_context"={
  *     "summary"="Load products",
- *     "parameters"={
- *		{
- *		 "in"="body",
- *		 "description"="List of products",
- *		 "schema"={
- *        "type"="object",
- *        "properties"={
- *         "products"={
- *          "type"="array",
- *          "description"="List of products",
- *          "items"={
- *           "type"="object",
- *           "properties"={
- *            "name"={
- *             "type"="string",
- *             "example"="Bedside table", 
- *            },
- *            "contain_articles"={
- *             "type"="array",
- *             "items"={
- *              "type"="object",
- *              "properties"={
- *               "art_id"={
- *                "type"="string",
- *                "example"="1",
- *               },
- *               "amount_of"={
- *                "type"="string",
- *                "example"="8", 
+ *     "responses"={
+ *      "202"={
+ *       "description"="Products loaded successfully",
+ *       "schema": {},
+ *      },
+ *      "400"={
+ *       "description"="Invalid json",
+ *      },
+ *     },
+ *     "requestBody"={
+ *		"description"="List of products",
+ *      "required"="true",
+ *      "content"={
+ *       "application/json"={
+ *		  "schema"={
+ *         "type"="object",
+ *         "properties"={
+ *          "products"={
+ *           "type"="array",
+ *           "description"="List of products",
+ *           "items"={
+ *            "type"="object",
+ *            "properties"={
+ *             "name"={
+ *              "type"="string",
+ *              "example"="Bedside table", 
+ *             },
+ *             "contain_articles"={
+ *              "type"="array",
+ *              "items"={
+ *               "type"="object",
+ *               "properties"={
+ *                "art_id"={
+ *                 "type"="string",
+ *                 "example"="1",
+ *                },
+ *                "amount_of"={
+ *                 "type"="string",
+ *                 "example"="8", 
+ *                },
  *               },
  *              },
  *             },
