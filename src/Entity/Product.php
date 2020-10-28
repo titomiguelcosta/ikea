@@ -231,6 +231,6 @@ class Product
             $stock = null === $stock ? $total : min($stock, $total);
         }
 
-        return $stock;
+        return (int) $stock;
     }
 }
