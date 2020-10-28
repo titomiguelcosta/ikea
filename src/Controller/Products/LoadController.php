@@ -11,7 +11,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class LoadController
 {
-    public function __invoke(Products $products, MessageBusInterface $bus)
+    public function __invoke(Products $products, MessageBusInterface $bus): Response
     {
         $bus->dispatch(new ProductsMessage($products));
 

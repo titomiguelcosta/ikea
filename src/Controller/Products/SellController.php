@@ -9,7 +9,7 @@ use App\Manager\ProductManager;
 
 class SellController
 {
-    public function __invoke(Product $data, ProductManager $productManager)
+    public function __invoke(Product $data, ProductManager $productManager): Product
     {
         return $productManager->sell($data);
     }

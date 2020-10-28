@@ -15,12 +15,6 @@ set('writable_mode', 'acl');
 set('composer_action', 'install');
 set('composer_options', '{{composer_action}} --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader --no-suggest');
 
-task('tests:run', function () {
-    run('php {{release_path}}/bin/console cache:clear --env=test -n');
-    run('php {{release_path}}/bin/console doctrine:migrations:migrate --env=test -n');
-    run('cd {{release_path}} && php vendor/bin/phpunit');
-});
-
 host('ikea.titomiguelcosta.com')
     ->user('ubuntu')
     ->stage('prod')
@@ -30,4 +24,3 @@ host('ikea.titomiguelcosta.com')
 
 after('deploy:failed', 'deploy:unlock');
 before('deploy:symlink', 'database:migrate');
-after('database:migrate', 'tests:run');
